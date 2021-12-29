@@ -7,9 +7,10 @@ setup(
     description='Easily create and visualize Joukowsky airfoils',
     author='Nestor Fabian Villar',
     author_email='nesfvillar@gmail.com',
-    url='',
-    download_url='',
-    keywords=['science, engineering, fluid mechanics, Joukowsky'],
+    url='https://github.com/nesfvillar/jFoil',
+    download_url='https://github.com/nesfvillar/jFoil/archive/refs/tags/v_01.tar.gz',
+    keywords=[
+        'science, engineering, fluid mechanics, aerodynamics, Joukowsky, airfoil'],
     install_requires=[
         'numpy',
         'matplotlib',
