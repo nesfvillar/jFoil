@@ -2,7 +2,7 @@
 
 Easily create and plot airfoils using the Joukowsky transformation.
 
-(WIP) It also uses the potential flow model to characterize and plot the foil's performance at different angles of attack. 
+It also uses the potential flow model to characterize and plot the foil's performance at different angles of attack.
 
 <p align="center">
     <br>
