@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
 class jFoil:
     """ Joukowsky foil creator.
 
@@ -67,6 +66,18 @@ class jFoil:
 
 def joukowskyTransform(z, b):
     return z + b**2 / z
+
+
+def uniformCurrent(uInf, z, alpha):
+    return uInf * z * np.exp(alpha)
+
+
+def source(uInf, a):
+    return uInf * a**2
+
+
+def dipole(circulation, z):
+    return -1j / 2*np.pi * circulation * np.log(z)
 
 
 def main():
