@@ -9,8 +9,7 @@ class jFoil:
 
     a - Radius of the pre-transformation cilinder. Approximately 1/4 of the final chord length.
 
-    relThickness - Proportional to the thickness of the airfoil. Must be between 0 and 1. For airfoils, it is generally
-    close to 0.9.
+    relThickness - Proportional to the thickness of the airfoil. Must be between 0 and 1. For airfoils, it is generally close to 0.9.
 
     beta - Curvature of the foil in degrees.
 
@@ -47,7 +46,27 @@ class jFoil:
 
     def plotCurrent(self, alpha=0, n=100):
         """ plotCurrent """
+        xlim, ylim = 3, 3
         alpha = np.deg2rad(alpha)
+
+        velocity = 1
+        circulation = 4 * np.pi * self.a * velocity * np.sin(alpha + self.beta)
+
+        x, y = np.mgrid[-xlim:xlim:1j*n, -ylim:ylim:1j*n]
+
+        z = x + 1j*y + self.a * self.relThickness - \
+            self.a * np.exp(1j*self.beta)
+
+        z *= np.abs(z) >= self.a
+
+        f = uniformCurrent(z, velocity, alpha) + \
+            dipole(z, velocity, self.a) - rotor(z, circulation)
+
+        psi = np.imag(f)
+
+        plt.contour(x, y, psi, levels=50)
+        plt.axis("scaled")
+        plt.show()
 
     def plotcL(self, minAlpha=-5, maxAlpha=5, n=50):
         """ plotcL """
@@ -68,21 +87,21 @@ def joukowskyTransform(z, b):
     return z + b**2 / z
 
 
-def uniformCurrent(uInf, z, alpha):
-    return uInf * z * np.exp(alpha)
+def uniformCurrent(z, uInf, alpha):
+    return uInf * z * np.exp(1j*alpha)
 
 
-def source(uInf, a):
-    return uInf * a**2
+def dipole(z, uInf, a):
+    return uInf * a**2 / z
 
 
-def dipole(circulation, z):
+def rotor(z, circulation):
     return -1j / 2*np.pi * circulation * np.log(z)
 
 
 def main():
     foil = jFoil(1, 0.9, 5)
-    foil.plotCurrent()
+    foil.plotCurrent(alpha=0)
     return
 
 
