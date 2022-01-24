@@ -59,8 +59,8 @@ class jFoil:
 
         z *= np.abs(z) >= self.a
 
-        f = uniformCurrent(z, velocity, alpha) + \
-            dipole(z, velocity, self.a) - rotor(z, circulation)
+        f = _uniformCurrent(z, velocity, alpha) + \
+            _dipole(z, velocity, self.a) - _rotor(z, circulation)
 
         psi = np.imag(f)
 
