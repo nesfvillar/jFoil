@@ -8,7 +8,7 @@ setup(
     author='Nestor Fabian Villar',
     author_email='nesfvillar@gmail.com',
     url='https://github.com/nesfvillar/jFoil',
-    download_url='https://github.com/nesfvillar/jFoil/archive/refs/tags/v_01.tar.gz',
+    download_url='https://github.com/nesfvillar/jFoil/archive/refs/tags/jFoil-v0.1.tar.gz',
     keywords=[
         'science, engineering, fluid mechanics, aerodynamics, Joukowsky, airfoil'],
     install_requires=[
