@@ -24,11 +24,11 @@ class jFoil:
         self.relThickness = relThickness
         self.beta = np.deg2rad(beta)
 
-        self.theta = np.linspace(0, 2*np.pi, n)
-        self.cilinder = self.a * (np.exp(1j*self.theta) - self.relThickness +
+        self._theta = np.linspace(0, 2*np.pi, n)
+        self.cilinder = self.a * (np.exp(1j*self._theta) - self.relThickness +
                                   np.exp(1j*self.beta))
 
-        self.foil = joukowskyTransform(
+        self.foil = _joukowskyTransform(
             self.cilinder, self.a * self.relThickness)
 
     def plotFoil(self, title='', grid=False):
@@ -44,8 +44,8 @@ class jFoil:
         """ saveFoil """
         np.savetxt(filename, self.foil, fmt='%f;%f', header='x;y', comments='')
 
-    def plotCurrent(self, alpha=0, n=100):
-        """ plotCurrent """
+    def _plotCurrent(self, alpha=0, n=100):
+        """ (WIP) plotCurrent """
         xlim, ylim = 3, 3
         alpha = np.deg2rad(alpha)
 
@@ -68,7 +68,7 @@ class jFoil:
         plt.axis("scaled")
         plt.show()
 
-    def plotcL(self, minAlpha=-5, maxAlpha=5, n=50):
+    def plotCl(self, minAlpha=-5, maxAlpha=5, n=50):
         """ plotcL """
         minAlpha = np.deg2rad(minAlpha)
         maxAlpha = np.deg2rad(maxAlpha)
@@ -83,27 +83,17 @@ class jFoil:
         plt.show()
 
 
-def joukowskyTransform(z, b):
+def _joukowskyTransform(z, b):
     return z + b**2 / z
 
 
-def uniformCurrent(z, uInf, alpha):
+def _uniformCurrent(z, uInf, alpha):
     return uInf * z * np.exp(1j*alpha)
 
 
-def dipole(z, uInf, a):
+def _dipole(z, uInf, a):
     return uInf * a**2 / z
 
 
-def rotor(z, circulation):
+def _rotor(z, circulation):
     return -1j / 2*np.pi * circulation * np.log(z)
-
-
-def main():
-    foil = jFoil(1, 0.9, 5)
-    foil.plotCurrent(alpha=0)
-    return
-
-
-if __name__ == '__main__':
-    main()
