@@ -27,16 +27,13 @@ import jFoil as jf
 foil = jf.jFoil(1, 0.9, 6)
 
 # Saves each point of the foil in csv format:
-foil.saveFoil('test_foil.csv')
+foil.saveFoil('example_foil.csv')
 
-# Shows the airfoil alone:
+# Plot the airfoil shape:
 foil.plotFoil()
 
-# Shows the airfoil and the current lines for an angle of attack:
-foil.currentLines(5)
-
 # Plots the airfoil coefficient of lift with respect to the angle of attack:
-foil.plotcL()
+foil.plotCl()
 ```
 
 
