@@ -19,15 +19,19 @@ class jFoil:
         if relThickness < 0 or relThickness > 1:
             raise ValueError(
                 "Bad value of airfoil thickness (relative thickness must be between 0 and 1)")
-
         self.a = a
         self.relThickness = relThickness
         self.beta = np.deg2rad(beta)
 
         self._theta = np.linspace(0, 2*np.pi, n)
-        self.cilinder = self.a * (np.exp(1j*self._theta) - self.relThickness +
-                                  np.exp(1j*self.beta))
 
+    @property
+    def cilinder(self):
+        return self.a * (np.exp(1j*self._theta) - self.relThickness +
+                         np.exp(1j*self.beta))
+
+    @property
+    def foil(self):
         self.foil = _joukowskyTransform(
             self.cilinder, self.a * self.relThickness)
 
