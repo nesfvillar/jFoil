@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import potentialFlow as pf
 
 
 class jFoil:
@@ -23,16 +24,15 @@ class jFoil:
         self.relThickness = relThickness
         self.beta = np.deg2rad(beta)
 
-        self._theta = np.linspace(0, 2*np.pi, n)
-
     @property
-    def cilinder(self):
-        return self.a * (np.exp(1j*self._theta) - self.relThickness +
+    def cilinder(self, n=100):
+        theta = np.linspace(0, 2*np.pi, n)
+        return self.a * (np.exp(1j*theta) - self.relThickness +
                          np.exp(1j*self.beta))
 
     @property
     def foil(self):
-        self.foil = _joukowskyTransform(
+        self.foil = pf.joukowskyTransform(
             self.cilinder, self.a * self.relThickness)
 
     def plotFoil(self, title='', grid=False):
@@ -56,15 +56,16 @@ class jFoil:
         velocity = 1
         circulation = 4 * np.pi * self.a * velocity * np.sin(alpha + self.beta)
 
-        x, y = np.mgrid[-xlim:xlim:1j*n, -ylim:ylim:1j*n]
+        x, y = np.mgrid[-xlim: xlim: 1j*n, -ylim: ylim: 1j*n]
 
         z = x + 1j*y + self.a * self.relThickness - \
             self.a * np.exp(1j*self.beta)
 
         z *= np.abs(z) >= self.a
 
-        f = _uniformCurrent(z, velocity, alpha) + \
-            _dipole(z, velocity, self.a) - _rotor(z, circulation)
+        f = pf.uniformCurrent(z, velocity, alpha) \
+            + pf.dipole(z, velocity, self.a) \
+            - pf.rotor(z, circulation)
 
         psi = np.imag(f)
 
@@ -85,19 +86,3 @@ class jFoil:
         plt.ylabel("cL")
         plt.grid()
         plt.show()
-
-
-def _joukowskyTransform(z, b):
-    return z + b**2 / z
-
-
-def _uniformCurrent(z, uInf, alpha):
-    return uInf * z * np.exp(1j*alpha)
-
-
-def _dipole(z, uInf, a):
-    return uInf * a**2 / z
-
-
-def _rotor(z, circulation):
-    return -1j / 2*np.pi * circulation * np.log(z)
