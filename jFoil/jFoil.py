@@ -16,7 +16,7 @@ class jFoil:
 
     [n] - number of samples that make the foil. Default 100. """
 
-    def __init__(self, a, relThickness, beta, n=100):
+    def __init__(self, a, relThickness, beta):
         if relThickness < 0 or relThickness > 1:
             raise ValueError(
                 "Bad value of airfoil thickness (relative thickness must be between 0 and 1)")
