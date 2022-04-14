@@ -2,4 +2,5 @@ python/
 *.pyc
 *.*~
 dist/
+*.swp
 MANIFEST
