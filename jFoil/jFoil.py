@@ -8,9 +8,11 @@ class jFoil:
 
     Parameters:
 
-    a - Radius of the pre-transformation cilinder. Approximately 1/4 of the final chord length.
+    a - Radius of the pre-transformation cilinder.
+    Approximately 1/4 of the final chord length.
 
-    relThickness - Proportional to the thickness of the airfoil. Must be between 0 and 1. For airfoils, it is generally close to 0.9.
+    relThickness - Proportional to the thickness of the airfoil.
+    Must be between 0 and 1. For airfoils, it is generally close to 0.9.
 
     beta - Curvature of the foil in degrees.
 
@@ -18,8 +20,8 @@ class jFoil:
 
     def __init__(self, a, relThickness, beta):
         if relThickness < 0 or relThickness > 1:
-            raise ValueError(
-                "Bad value of airfoil thickness (relative thickness must be between 0 and 1)")
+            raise ValueError("Bad value of airfoil thickness \
+                             (relative thickness must be between 0 and 1)")
         self.a = a
         self.relThickness = relThickness
         self.beta = np.deg2rad(beta)
@@ -44,7 +46,7 @@ class jFoil:
             plt.grid()
         plt.show()
 
-    def saveFoil(self, filename='foil.csv'):
+    def saveFoil(self, filename):
         """ saveFoil """
         np.savetxt(filename, self.foil, fmt='%f;%f', header='x;y', comments='')
 
