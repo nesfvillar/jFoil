@@ -33,7 +33,7 @@ class JFoil(Airfoil):
     [n] - number of samples that make the foil. Default 100. """
 
     def __init__(self, a, relThickness, beta, n=100):
-        assert relThickness < 0 and relThickness > 1
+        assert relThickness > 0 and relThickness < 1
 
         self.a = a
         self.relThickness = relThickness
@@ -42,7 +42,7 @@ class JFoil(Airfoil):
         theta = np.linspace(0, 2*np.pi, n)
         cilinder = self.a * (np.exp(1j*theta) - self.relThickness + np.exp(1j*self.beta))
 
-        super().__init__(self._joukowskyTransform(self.cilinder, self.a * self.relThickness))
+        super().__init__(self._joukowskyTransform(cilinder, self.a * self.relThickness))
 
-    def _joukowskyTransform(z, b):
+    def _joukowskyTransform(self, z, b):
         return z + b**2 / z
