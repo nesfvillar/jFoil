@@ -14,9 +14,9 @@ class Airfoil:
             plt.grid()
         plt.show()
 
-    def saveFoil(self, filename='foil.csv'):
+    def saveFoil(self, filename, delimiter='\t'):
         """ saveFoil """
-        np.savetxt(filename, self.foil, fmt='%f;%f', header='x;y', comments='')
+        np.savetxt(filename, self.foil, fmt=f'%f{delimiter}%f', header=f'x{delimiter}y', comments='')
 
 
 class JFoil(Airfoil):
